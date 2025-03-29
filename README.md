@@ -6,6 +6,6 @@ this is a reproducibility test that use opencv for this blog:
 
 and rendered video and images are here:
 
-[](https://raw.githubusercontent.com/geoochi/collisions/main/output.mp4)
+https://github.com/user-attachments/assets/9f32d9e3-0697-4e98-8510-33d65e73a77d
 
 <img src="output.png" alt="output image" />
