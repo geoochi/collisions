@@ -83,7 +83,7 @@ plt.savefig('output.png', dpi=300)
 
 # k = 1
 # m1 = 1
-# m2 = 10 ** (2 * k)
+# m2 = m1 * (10 ** (2 * k))
 # N = int(np.ceil((np.pi / np.atan(np.sqrt(m1 / m2))) - 1))
 # pi_appr = (N + 1) / (10**k)
 # print(f'm1: {m1}')
@@ -203,7 +203,7 @@ for i in range(len(df_x_interp)):
         # show approximation of π
         if j_old == df.shape[0] - 1:
             N = j_old - 1
-            s = f'pi appr: {((N+1)/np.sqrt(m2)):.6f}'
+            s = f'pi appr: {((N+1)*np.sqrt(m1/m2)):.6f}'
             text_size, _ = cv2.getTextSize(s, cv2.FONT_HERSHEY_SIMPLEX, 2, 3)
             background = cv2.putText(
                 background,
