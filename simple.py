@@ -56,19 +56,6 @@ stats.append([timestamp + 1, x1 + v1 * 1, v1, x2 + v2 * 1, v2])
 
 df = pd.DataFrame(stats, columns=['timestamp', 'x1', 'v1', 'x2', 'v2'])
 
-
-# video size
-col = 3840
-row = 2160
-k1 = col / 6
-
-# background image
-background = np.zeros((row, col, 3), dtype=np.uint8)
-
-# right simulation
-pr = np.array([col * 0, row * 1])
-kr = lambda x, y: (pr + np.array([k1, -k1]) * [x, y]).astype(np.int64)
-
 # linear interpolation of position with constant fps
 fps = 60
 df_x_interp = pd.DataFrame(columns=['timestamp', 'x1', 'x2'])
@@ -82,13 +69,11 @@ def render_frame(x1, x2, width, height):
     frame = [[' ' for _ in range(width)] for _ in range(height)]
 
     # Draw ground line
-    ground_y = height - 2
-    for x in range(width):
-        frame[ground_y][x] = '━'
+    ground_y = height
 
     # Calculate scale factor to map physical coordinates to terminal space
     max_x = max(max(df_x_interp['x1']), max(df_x_interp['x2'])) + a2
-    scale = (width - 2) / max_x  # reduce margin from 4 to 2
+    scale = width / max_x  # reduce margin from 4 to 2
     v_scale = scale * 0.5
 
     def draw_box(x_pos, y_pos, size_x, size_y):
