@@ -96,7 +96,7 @@ plt.savefig('output.png', dpi=300)
 # video size
 col = 3840
 row = 2160
-k1 = col // 10
+k1 = col / 10
 
 # background image
 background = np.zeros((row, col, 3), dtype=np.uint8) + 255
