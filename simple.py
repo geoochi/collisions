@@ -77,12 +77,7 @@ df_x_interp['x1'] = np.interp(df_x_interp['timestamp'], df['timestamp'], df['x1'
 df_x_interp['x2'] = np.interp(df_x_interp['timestamp'], df['timestamp'], df['x2'])
 
 
-# terminal rendering
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
-def render_frame(x1, x2, width=120, height=30):
+def render_frame(x1, x2, width, height):
     # Create empty frame
     frame = [[' ' for _ in range(width)] for _ in range(height)]
 
@@ -93,25 +88,40 @@ def render_frame(x1, x2, width=120, height=30):
 
     # Calculate scale factor to map physical coordinates to terminal space
     max_x = max(max(df_x_interp['x1']), max(df_x_interp['x2'])) + a2
-    scale = (width - 4) / max_x
+    scale = (width - 2) / max_x  # reduce margin from 4 to 2
     v_scale = scale * 0.5
 
     def draw_box(x_pos, y_pos, size_x, size_y):
-        # Fill box
+        # Fill box with three types of blocks for smoother appearance
+        start_x = x_pos * 2
+        end_x = (x_pos + size_x) * 2
+
         for y in range(y_pos, y_pos + size_y):
-            for x in range(x_pos, x_pos + size_x):
-                if 0 <= x < width and 0 <= y < height:
-                    frame[y][x] = '█'
+            if 0 <= y < height:
+                # Handle first character (left edge)
+                first_x = start_x // 2
+                if 0 <= first_x < width:
+                    frame[y][first_x] = '▌' if start_x % 2 == 0 else '█'
+
+                # Handle middle characters (full blocks)
+                for x in range((start_x + 1) // 2, end_x // 2):
+                    if 0 <= x < width:
+                        frame[y][x] = '█'
+
+                # Handle last character (right edge)
+                last_x = (end_x - 1) // 2
+                if last_x != first_x and 0 <= last_x < width:
+                    frame[y][last_x] = '▐' if end_x % 2 == 1 else '█'
 
     # Draw left box (m1)
-    box1_x = int(x1 * scale) + 2
+    box1_x = max(0, int(x1 * scale))  # remove +2 margin, use max to prevent negative position
     box1_y = ground_y - int(a1 * v_scale)
     box1_size_x = int(a1 * scale)
     box1_size_y = int(a1 * v_scale)
     draw_box(box1_x, box1_y, box1_size_x, box1_size_y)
 
     # Draw right box (m2)
-    box2_x = int(x2 * scale) + 2
+    box2_x = max(0, int(x2 * scale))  # remove +2 margin, use max to prevent negative position
     box2_y = ground_y - int(a2 * v_scale)
     box2_size_x = int(a2 * scale)
     box2_size_y = int(a2 * v_scale)
@@ -132,8 +142,14 @@ def render_frame(x1, x2, width=120, height=30):
 
 
 # terminal animation
+# if width is not enough, print error
+width = 120
+height = 30
+if os.get_terminal_size().columns < width:
+    print("Error: width is not enough")
+    exit()
 
 for i in range(len(df_x_interp)):
-    clear_screen()
-    print(render_frame(df_x_interp['x1'][i], df_x_interp['x2'][i]))
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(render_frame(df_x_interp['x1'][i], df_x_interp['x2'][i], width, height))
     time.sleep(1 / fps)
