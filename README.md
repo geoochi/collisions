@@ -9,3 +9,8 @@ and rendered video and images are here:
 https://github.com/user-attachments/assets/9f32d9e3-0697-4e98-8510-33d65e73a77d
 
 <img src="main.png" alt="output image" />
+
+command line version :
+
+https://github.com/user-attachments/assets/71a1e205-f9ac-405e-935d-526328f132f7
+
