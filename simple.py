@@ -64,12 +64,21 @@ df_x_interp['x1'] = np.interp(df_x_interp['timestamp'], df['timestamp'], df['x1'
 df_x_interp['x2'] = np.interp(df_x_interp['timestamp'], df['timestamp'], df['x2'])
 
 
-def render_frame(x1, x2, width, height):
+def render_frame(x1, x2, width, height, i):
     # Create empty frame
     frame = [[' ' for _ in range(width)] for _ in range(height)]
 
     # Draw ground line
-    ground_y = height
+    ground_y = height - 1
+
+    global j_old
+    # show collisions number at last line
+    if df['timestamp'][j_old] <= df_x_interp['timestamp'][i]:
+        j = j_old
+        while df['timestamp'][j] <= df_x_interp['timestamp'][i]:
+            j += 1
+        j_old = j
+    frame[height - 1][0] = f'collisions: {j_old-1}'
 
     # Calculate scale factor to map physical coordinates to terminal space
     max_x = max(max(df_x_interp['x1']), max(df_x_interp['x2'])) + a2
@@ -134,7 +143,8 @@ if os.get_terminal_size().columns < width:
     print("Error: width is not enough")
     exit()
 
+j_old = 1
 for i in range(len(df_x_interp)):
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(render_frame(df_x_interp['x1'][i], df_x_interp['x2'][i], width, height))
+    print(render_frame(df_x_interp['x1'][i], df_x_interp['x2'][i], width, height, i))
     time.sleep(1 / fps)
