@@ -78,7 +78,7 @@ ax.set_title(f'Velocity')
 ax.set_xlabel('Time (s)')
 ax.set_ylabel('Velocity (m/s)')
 
-plt.savefig('output.png', dpi=300)
+plt.savefig('main.png', dpi=300)
 # plt.show()
 
 # k = 1
@@ -174,7 +174,7 @@ df_x_interp['x2'] = np.interp(df_x_interp['timestamp'], df['timestamp'], df['x2'
 
 # video writer
 fourcc = cv2.VideoWriter_fourcc(*'avc1')
-videoWriter = cv2.VideoWriter('output.mp4', fourcc, fps, (col, row))
+videoWriter = cv2.VideoWriter('main.mp4', fourcc, fps, (col, row))
 j_old = 1
 k2 = r / np.sqrt(2 * E)
 for i in range(len(df_x_interp)):
