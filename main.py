@@ -54,7 +54,7 @@ stats.append([timestamp + 1, x1 + v1 * 1, v1, x2 + v2 * 1, v2])
 
 df = pd.DataFrame(stats, columns=['timestamp', 'x1', 'v1', 'x2', 'v2'])
 
-fig = plt.figure(figsize=(16, 10))
+fig = plt.figure(figsize=(10, 8))
 
 ax = fig.add_subplot(2, 1, 1)
 ax.plot(df['timestamp'], df['x1'], '-', label='x1', color='steelblue')
@@ -78,7 +78,7 @@ ax.set_title(f'Velocity')
 ax.set_xlabel('Time (s)')
 ax.set_ylabel('Velocity (m/s)')
 
-plt.savefig('main.png', dpi=300)
+plt.savefig('main.png', dpi=150)
 # plt.show()
 
 # k = 1
