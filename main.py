@@ -58,9 +58,9 @@ fig = plt.figure(figsize=(10, 8))
 
 ax = fig.add_subplot(2, 1, 1)
 ax.plot(df['timestamp'], df['x1'], '-', label='x1', color='steelblue')
-ax.plot(df['timestamp'][1:-1], df['x1'][1:-1], 'o', color=(100/255, 220/255, 100/255))
+ax.plot(df['timestamp'][1:-1], df['x1'][1:-1], '.', color=(100/255, 200/255, 100/255))
 ax.plot(df['timestamp'], df['x2'], '-', label='x2', color='orange')
-ax.plot(df['timestamp'][1:-1], df['x2'][1:-1], 'o', label='collision', color=(100/255, 200/255, 100/255))
+ax.plot(df['timestamp'][1:-1], df['x2'][1:-1], '.', label='collision', color=(100/255, 200/255, 100/255))
 ax.legend(loc='lower right')
 ax.grid()
 ax.set_title(f'm1={m1:.0f}kg, m2={m2:.0f}kg, collisions={len(df)-2}\n\n\nPosition')
@@ -69,9 +69,9 @@ ax.set_ylabel('Position (m)')
 
 ax = fig.add_subplot(2, 1, 2)
 ax.plot(df['timestamp'], df['v1'], '-', label='v1', color='steelblue')
-ax.plot(df['timestamp'][1:-1], df['v1'][1:-1], 'o', color=(100/255, 220/255, 100/255))
+ax.plot(df['timestamp'][1:-1], df['v1'][1:-1], '.', color=(100/255, 200/255, 100/255))
 ax.plot(df['timestamp'], df['v2'], '-', label='v2', color='orange')
-ax.plot(df['timestamp'][1:-1], df['v2'][1:-1], 'o', label='collision', color=(100/255, 220/255, 100/255))
+ax.plot(df['timestamp'][1:-1], df['v2'][1:-1], '.', label='collision', color=(100/255, 200/255, 100/255))
 ax.legend(loc='lower right')
 ax.grid()
 ax.set_title(f'Velocity')
@@ -186,7 +186,7 @@ for i in range(len(df_x_interp)):
                 background,
                 kl(np.sqrt(m2) * df['v2'][j - 1] * k2, np.sqrt(m1) * df['v1'][j - 1] * k2),
                 kl(np.sqrt(m2) * df['v2'][j] * k2, np.sqrt(m1) * df['v1'][j] * k2),
-                (100, 220, 100),
+                (100, 200, 100),
                 3,
                 lineType=cv2.LINE_AA,
             )
@@ -194,7 +194,7 @@ for i in range(len(df_x_interp)):
                 background,
                 kl(np.sqrt(m2) * df['v2'][j] * k2, np.sqrt(m1) * df['v1'][j] * k2),
                 10,
-                (100, 220, 100),
+                (100, 200, 100),
                 -1,
                 lineType=cv2.LINE_AA,
             )
@@ -211,7 +211,7 @@ for i in range(len(df_x_interp)):
                 kl(0, -1.4 * r) + [-text_size[0] + 200, text_size[1] // 2],
                 cv2.FONT_HERSHEY_SIMPLEX,
                 2,
-                (100, 220, 100),
+                (100, 200, 100),
                 3,
             )
             s = f'pi real: {np.pi:.6f}'
@@ -222,7 +222,7 @@ for i in range(len(df_x_interp)):
                 kl(0, -1.55 * r) + [-text_size[0] + 200, text_size[1] // 2],
                 cv2.FONT_HERSHEY_SIMPLEX,
                 2,
-                (100, 220, 100),
+                (100, 200, 100),
                 3,
             )
 
@@ -235,7 +235,7 @@ for i in range(len(df_x_interp)):
         kl(0, -1.2 * r) + [-text_size[0] // 2, text_size[1] // 2],
         cv2.FONT_HERSHEY_SIMPLEX,
         2,
-        (100, 220, 100),
+        (100, 200, 100),
         3,
     )
 
